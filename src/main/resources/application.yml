@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: neet-rag
+  ai:
+    embedding:
+      transformer:
+        # Local copy of all-MiniLM-L6-v2 (see README for download commands)
+        onnx:
+          model-uri: file:models/all-MiniLM-L6-v2/model.onnx
+          model-output-name: last_hidden_state
+        tokenizer:
+          uri: file:models/all-MiniLM-L6-v2/tokenizer.json
+
+neet:
+  questions-dir: data/questions
+  ncert-dir: data/ncert
+  vector-store-file: data/vectorstore.json
+  # Build the vector store automatically on first start (when the file above doesn't exist)
+  ingest-on-startup: true
+  top-k: 5
+  similarity-threshold: 0.3
+  claude:
+    model: claude-opus-5-5
+    max-tokens: 16000
+    # low | medium | high | xhigh | max
+    effort: medium

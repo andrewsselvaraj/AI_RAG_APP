@@ -1,0 +1,68 @@
+[
+  {
+    "id": "SAMPLE-PHY-001",
+    "subject": "Physics",
+    "chapter": "Laws of Motion",
+    "topic": "Newton's second law",
+    "year": null,
+    "question": "A force of 20 N acts on a body of mass 4 kg initially at rest. What is its velocity after 3 seconds?",
+    "options": { "A": "5 m/s", "B": "10 m/s", "C": "15 m/s", "D": "20 m/s" },
+    "answer": "C",
+    "explanation": "Acceleration a = F/m = 20/4 = 5 m/s^2. Starting from rest, v = u + at = 0 + 5 x 3 = 15 m/s."
+  },
+  {
+    "id": "SAMPLE-PHY-002",
+    "subject": "Physics",
+    "chapter": "Ray Optics and Optical Instruments",
+    "topic": "Lens power",
+    "year": null,
+    "question": "What is the power of a convex lens of focal length 25 cm?",
+    "options": { "A": "+2 D", "B": "+4 D", "C": "-4 D", "D": "+0.25 D" },
+    "answer": "B",
+    "explanation": "Power P = 1/f with f in metres. f = +0.25 m for a convex lens, so P = 1/0.25 = +4 dioptre."
+  },
+  {
+    "id": "SAMPLE-CHE-001",
+    "subject": "Chemistry",
+    "chapter": "Some Basic Concepts of Chemistry",
+    "topic": "Mole concept",
+    "year": null,
+    "question": "How many moles of water are present in 36 g of water?",
+    "options": { "A": "1", "B": "2", "C": "3", "D": "18" },
+    "answer": "B",
+    "explanation": "Molar mass of H2O = 2(1) + 16 = 18 g/mol. Moles = 36 / 18 = 2 mol."
+  },
+  {
+    "id": "SAMPLE-CHE-002",
+    "subject": "Chemistry",
+    "chapter": "Chemical Bonding and Molecular Structure",
+    "topic": "Hybridisation",
+    "year": null,
+    "question": "What is the hybridisation of the carbon atom in methane (CH4)?",
+    "options": { "A": "sp", "B": "sp2", "C": "sp3", "D": "dsp2" },
+    "answer": "C",
+    "explanation": "Carbon forms four sigma bonds with no lone pairs, giving four hybrid orbitals: sp3, with a tetrahedral shape and bond angle 109.5 degrees."
+  },
+  {
+    "id": "SAMPLE-BIO-001",
+    "subject": "Biology",
+    "chapter": "Cell: The Unit of Life",
+    "topic": "Cell organelles",
+    "year": null,
+    "question": "Which organelle is known as the powerhouse of the cell?",
+    "options": { "A": "Ribosome", "B": "Golgi apparatus", "C": "Mitochondrion", "D": "Lysosome" },
+    "answer": "C",
+    "explanation": "Mitochondria are the site of aerobic respiration and produce most of the cell's ATP, so they are called the powerhouse of the cell."
+  },
+  {
+    "id": "SAMPLE-BIO-002",
+    "subject": "Biology",
+    "chapter": "Photosynthesis in Higher Plants",
+    "topic": "Light reaction",
+    "year": null,
+    "question": "In photosynthesis, the oxygen released comes from which molecule?",
+    "options": { "A": "Carbon dioxide", "B": "Water", "C": "Glucose", "D": "Chlorophyll" },
+    "answer": "B",
+    "explanation": "Photolysis of water during the light reaction splits H2O into protons, electrons and O2. The released oxygen therefore comes from water, not CO2."
+  }
+]
