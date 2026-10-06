@@ -12,6 +12,7 @@ public record RagProperties(
         double similarityThreshold,
         Claude claude) {
 
-    public record Claude(String model, long maxTokens, String effort) {
+    /** apiKey is optional: when blank, the ANTHROPIC_API_KEY environment variable is used. */
+    public record Claude(String model, long maxTokens, String effort, String apiKey) {
     }
 }

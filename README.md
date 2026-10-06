@@ -25,11 +25,16 @@ retrieval-augmented generation (RAG):
    curl -L -o models/all-MiniLM-L6-v2/model.onnx https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/onnx/model.onnx
    ```
 
-2. **Claude API key** from https://console.anthropic.com (PowerShell):
+2. **Claude API key** from https://console.anthropic.com. Either:
 
-   ```powershell
-   $env:ANTHROPIC_API_KEY = "sk-ant-..."
-   ```
+   - copy `secrets.example.yml` to `secrets.yml` and put the key there (git-ignored), or
+   - set an environment variable (PowerShell):
+
+     ```powershell
+     $env:ANTHROPIC_API_KEY = "sk-ant-..."
+     ```
+
+   If both are set, `secrets.yml` wins. Never put the key in `src/main/resources/application.yml`.
 
 3. **Run** (Maven is downloaded automatically by the wrapper):
 
@@ -70,6 +75,12 @@ After adding files, rebuild the vector store:
 ```powershell
 Invoke-RestMethod -Method Post http://localhost:8081/api/ingest
 ```
+
+## Web screen
+
+Open http://localhost:8081/ in a browser. Type a question, optionally pick a subject or source type,
+then click **Ask** (Claude answers, with numbered sources) or **Search only** (sources only, no API key
+needed). **Rebuild index** at the bottom re-reads `data/` after you add files.
 
 ## API
 

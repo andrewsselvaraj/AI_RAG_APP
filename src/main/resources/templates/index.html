@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NEET Tutor</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<main class="page">
+    <header class="header">
+        <h1>NEET Tutor</h1>
+        <p class="subtitle">Ask a Physics, Chemistry or Biology question. Answers are based on NCERT and past NEET questions.</p>
+    </header>
+
+    <div class="alert alert-error" th:if="${error}" th:text="${error}">Error</div>
+    <div class="alert alert-ok" th:if="${message}" th:text="${message}">Message</div>
+
+    <form class="card ask-form" method="post" th:action="@{/}" id="ask-form">
+        <label for="question" class="label">Your question</label>
+        <textarea id="question" name="question" rows="4" required
+                  placeholder="e.g. Where does the oxygen released in photosynthesis come from?"
+                  th:text="${question}"></textarea>
+
+        <div class="filters">
+            <label class="field">
+                <span class="label">Subject</span>
+                <select name="subject">
+                    <option value="" th:selected="${subject == ''}">All subjects</option>
+                    <option value="Physics" th:selected="${subject == 'Physics'}">Physics</option>
+                    <option value="Chemistry" th:selected="${subject == 'Chemistry'}">Chemistry</option>
+                    <option value="Biology" th:selected="${subject == 'Biology'}">Biology</option>
+                </select>
+            </label>
+            <label class="field">
+                <span class="label">Search in</span>
+                <select name="type">
+                    <option value="" th:selected="${type == ''}">Questions and NCERT</option>
+                    <option value="question" th:selected="${type == 'question'}">NEET questions only</option>
+                    <option value="ncert" th:selected="${type == 'ncert'}">NCERT text only</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="actions">
+            <button type="submit" name="action" value="ask" class="btn btn-primary">Ask</button>
+            <button type="submit" name="action" value="search" class="btn">Search only</button>
+            <span class="loading" id="loading" hidden>Thinking… this can take up to a minute.</span>
+        </div>
+    </form>
+
+    <section class="card answer" th:if="${answerHtml}">
+        <h2>Answer</h2>
+        <div class="markdown" th:utext="${answerHtml}">Answer</div>
+    </section>
+
+    <section class="sources" th:if="${sources != null}">
+        <h2 th:text="${searchOnly} ? 'Search results' : 'Sources'">Sources</h2>
+        <p class="muted" th:if="${#lists.isEmpty(sources)}">
+            Nothing matched. Try other words, a different subject, or rebuild the index after adding data.
+        </p>
+        <details class="card source" th:each="s : ${sources}" th:open="${searchOnly}">
+            <summary>
+                <span class="num" th:text="'[' + ${s.number} + ']'">[1]</span>
+                <span class="tag" th:text="${s.metadata['type'] == 'ncert'} ? 'NCERT' : 'NEET question'">type</span>
+                <span class="tag tag-subject" th:if="${s.metadata['subject']}" th:text="${s.metadata['subject']}">subject</span>
+                <span class="meta" th:if="${s.metadata['chapter']}" th:text="${s.metadata['chapter']}">chapter</span>
+                <span class="meta" th:if="${s.metadata['year']}" th:text="${s.metadata['year']}">year</span>
+                <span class="meta" th:if="${s.metadata['type'] == 'ncert'}"
+                      th:text="${s.metadata['source']} + (${s.metadata['page_number']} != null ? ', p. ' + ${s.metadata['page_number']} : '')">file</span>
+                <span class="score" th:if="${s.score != null}"
+                      th:text="'match ' + ${#numbers.formatDecimal(s.score, 1, 2)}">score</span>
+            </summary>
+            <pre class="source-text" th:text="${s.text}">text</pre>
+        </details>
+    </section>
+
+    <footer class="footer">
+        <form method="post" th:action="@{/ingest}" id="ingest-form">
+            <button type="submit" class="btn btn-small">Rebuild index</button>
+            <span class="muted">after adding files to <code>data/questions</code> or <code>data/ncert</code></span>
+        </form>
+    </footer>
+</main>
+
+<script>
+    // Show progress while Claude answers, and stop double submits
+    document.getElementById('ask-form').addEventListener('submit', function () {
+        document.getElementById('loading').hidden = false;
+        setTimeout(() => this.querySelectorAll('button').forEach(b => b.disabled = true), 0);
+    });
+    document.getElementById('ingest-form').addEventListener('submit', function () {
+        setTimeout(() => this.querySelector('button').disabled = true, 0);
+    });
+</script>
+</body>
+</html>

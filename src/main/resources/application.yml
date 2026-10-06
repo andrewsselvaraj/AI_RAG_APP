@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: neet-rag
+  config:
+    # Local secrets (Claude API key). This file is git-ignored; copy secrets.example.yml to create it.
+    import: optional:file:./secrets.yml
   ai:
     embedding:
       transformer:

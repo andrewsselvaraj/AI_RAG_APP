@@ -10,6 +10,7 @@ import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 @Configuration
 public class AppConfig {
@@ -27,9 +28,13 @@ public class AppConfig {
         return store;
     }
 
-    /** Reads ANTHROPIC_API_KEY from the environment. */
+    /** Uses neet.claude.api-key (from secrets.yml) if set, otherwise ANTHROPIC_API_KEY from the environment. */
     @Bean(destroyMethod = "close")
-    public AnthropicClient anthropicClient() {
+    public AnthropicClient anthropicClient(RagProperties props) {
+        String apiKey = props.claude().apiKey();
+        if (StringUtils.hasText(apiKey)) {
+            return AnthropicOkHttpClient.builder().fromEnv().apiKey(apiKey).build();
+        }
         return AnthropicOkHttpClient.fromEnv();
     }
 }

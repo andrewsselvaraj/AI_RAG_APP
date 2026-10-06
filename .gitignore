@@ -5,3 +5,4 @@ target/
 data/vectorstore.json
 .env
 models/
+secrets.yml
