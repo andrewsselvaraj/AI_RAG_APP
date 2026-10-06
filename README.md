@@ -36,6 +36,9 @@ retrieval-augmented generation (RAG):
 
    If both are set, `secrets.yml` wins. Never put the key in `src/main/resources/application.yml`.
 
+   A pre-commit check in `.githooks/` blocks any commit that contains a Claude key. Enable it once
+   per clone: `git config core.hooksPath .githooks`
+
 3. **Run** (Maven is downloaded automatically by the wrapper):
 
    ```powershell

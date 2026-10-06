@@ -1,0 +1,25 @@
+#!/bin/sh
+# Blocks commits that contain a Claude (Anthropic) API key.
+# Enabled per clone with: git config core.hooksPath .githooks
+
+pattern='sk-ant-[A-Za-z0-9_-]{20,}'
+found=0
+
+for file in $(git diff --cached --name-only --diff-filter=ACM); do
+    # Only look at lines being added in this commit
+    if git diff --cached -U0 -- "$file" | grep '^+' | grep -v '^+++' | grep -Eq "$pattern"; then
+        # Placeholders such as sk-ant-your-key-here are allowed
+        if git diff --cached -U0 -- "$file" | grep '^+' | grep -Eo "$pattern" | grep -vq 'your-key-here'; then
+            echo "VALIDATION ERROR: $file contains a Claude API key (sk-ant-...)." >&2
+            found=1
+        fi
+    fi
+done
+
+if [ "$found" -ne 0 ]; then
+    echo "" >&2
+    echo "Commit blocked. Put real keys only in secrets.yml (git-ignored)." >&2
+    echo "In secrets.example.yml keep the placeholder: api-key: sk-ant-your-key-here" >&2
+    exit 1
+fi
+exit 0
